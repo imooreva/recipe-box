@@ -15,7 +15,10 @@ class App extends React.Component {
     }    
     render() {
         return (
-            <Main/>
+            <div className="column small-centered medium-8 large-8">
+                <h2 id="app-heading">Recipe Box</h2>
+                <Main/>
+            </div>
         );
     }    
 };

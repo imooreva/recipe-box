@@ -6,3 +6,18 @@
 @include foundation-everything;
 
 //components
+
+#app-heading {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.accordion-title {
+    font-size: 1.125rem;
+}
+
+button[class^="button"]{
+    border-radius: 5px;
+    font-size: 1rem;
+    margin: 0 0.125rem;
+}

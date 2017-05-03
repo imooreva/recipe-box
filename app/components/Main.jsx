@@ -13,10 +13,13 @@ class Main extends React.Component {
     render() {
         return (
             <div>
-                <div className="columns medium-6 large-4 small-centered">
-                    {recipes.map((name,index) => <Recipe key={index} recipeIndex={index} recipeTitle={name.title} ingredientsList={name.ingredients.toString()}/>)}
-                    <AddRecipe/>
-                </div>
+                <ul className="accordion" data-accordion data-allow-all-closed="true">
+                    {recipes.map((name,index) => <Recipe key={index} 
+                                                     recipeIndex={index} 
+                                                     recipeTitle={name.title} 
+                                                     ingredientsList={name.ingredients.toString().replace(/,/g, ", ")}/>)}
+                </ul>                    
+                <AddRecipe/>
             </div>
         )
     }
