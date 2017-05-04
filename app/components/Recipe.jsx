@@ -9,12 +9,12 @@ class Recipe extends React.Component {
         super(props);
         this.delete = this.delete.bind(this);
     }
-    
+
     delete(i) {
         recipes.splice(i,1);
         RecipeList();
     }
-    
+
     render() {
         return (
             <li key={this.props.recipeIndex} className="accordion-item" data-accordion-item>

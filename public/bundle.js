@@ -22004,8 +22004,9 @@
 	            }
 	            if (checkRecipes(recipe) >= 0) {
 	                updateRecipe(recipe, ingredients);
+	                return;
 	            } else {
-	                recipes.push({ name: recipe, ingredients: ingredients.split(',') });
+	                recipes.push({ name: recipe, ingredients: ingredients.replace(/\s{2,}/g, '').split(',') });
 	                RecipeList();
 	            }
 	            this.setState({
@@ -22119,7 +22120,7 @@
 	var updateRecipe = function updateRecipe(n, ingredients) {
 	    if (checkRecipes(n) >= 0) {
 	        var arrIndex = checkRecipes(n);
-	        recipes[arrIndex].ingredients = ingredients.replace(/\s+/g, '').split(',');
+	        recipes[arrIndex].ingredients = ingredients.replace(/\s{2,}/g, '').split(',');
 	    }
 	    RecipeList();
 	};

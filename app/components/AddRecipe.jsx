@@ -23,8 +23,9 @@ class AddRecipe extends React.Component {
         }
         if (checkRecipes(recipe) >= 0) {
             updateRecipe(recipe,ingredients);
+            return;
         } else {
-            recipes.push({name: recipe, ingredients: ingredients.split(',')});
+            recipes.push({name: recipe, ingredients: ingredients.replace(/\s{2,}/g, '').split(',')});
             RecipeList();
         }
         this.setState({
