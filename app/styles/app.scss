@@ -9,7 +9,12 @@
 
 #app-heading {
     margin-top: 1rem;
-    text-align: center;
+    text-align: center;    
+}
+
+#recipe-exists-span {
+    color: red;
+    visibility: hidden;
 }
 
 .accordion-title {

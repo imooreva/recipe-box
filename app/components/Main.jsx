@@ -9,17 +9,28 @@ class Main extends React.Component {
     
     constructor(props) {
         super(props);
+        this.state = {
+            updated: false
+        };
+        this.monitorUpdates = this.monitorUpdates.bind(this);
     }
+    
+    monitorUpdates() {
+        this.setState({
+            updated: true
+        });
+    }
+    
     render() {
         return (
             <div>
                 <ul className="accordion" data-accordion data-allow-all-closed="true">
                     {recipes.map((name,index) => <Recipe key={index} 
                                                      recipeIndex={index} 
-                                                     recipeTitle={name.title} 
+                                                     recipeTitle={name.name} 
                                                      ingredientsList={name.ingredients.toString().replace(/,/g, ", ")}/>)}
                 </ul>                    
-                <AddRecipe/>
+                <AddRecipe onSubmit={this.monitorUpdates}/>
             </div>
         )
     }
