@@ -15,6 +15,14 @@ module.exports = {
             '$': 'jquery',
             'jQuery': 'jquery'
         })
+        //save for production build later
+        //}),
+        //new webpack.DefinePlugin({
+        //    'process.env': {
+        //    NODE_ENV: JSON.stringify('production')
+        //    }
+        //}),
+        //new webpack.optimize.UglifyJsPlugin()
     ],
     output: {
         path: __dirname,

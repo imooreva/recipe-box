@@ -18,7 +18,7 @@ class AddRecipe extends React.Component {
         let recipe = $('#reveal-recipe-name').val();
         let ingredients = $('#reveal-ingredients').val();
         if (recipe == '' || ingredients == '') {
-            return;
+            return this.close();
         }
         if (checkRecipes(recipe) >= 0) {
             updateRecipe(recipe,ingredients);

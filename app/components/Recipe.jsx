@@ -12,10 +12,16 @@ class Recipe extends React.Component {
 
     deleteRecipe(e) {
         let index = e.currentTarget.value;
-        recipes.splice(index, 1);
-        RecipeList();
+        if (confirm(`Delete recipe for ${recipes[index].name}?`)) {
+            recipes.splice(index, 1);
+            RecipeList();
+            this.props.updateWatcher();
+        }        
     }
-
+    //shouldComponentUpdate() {
+    //    RecipeList();
+    //    return true;
+    //}
     render() {
         let i = this.props.recipeIndex
         console.log(i);

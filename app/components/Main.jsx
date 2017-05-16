@@ -10,23 +10,25 @@ class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            updated: false
+            updated: false,
+            latestRecipes: recipes
         };
         this.monitorUpdates = this.monitorUpdates.bind(this);
     }
     
     componentDidMount() {
         console.log('component mounted...');
-        setTimeout( ()=> { RecipeList() }, 50)
     }
     
     monitorUpdates() {
         console.log('updating...');
         this.setState({
-            updated: true
+            date: Date(),
+            updated: true,
+            latestRecipes: recipes
         });
+        //RecipeList();
     }
-    
     render() {
         return (
             <div>
@@ -34,7 +36,9 @@ class Main extends React.Component {
                     {recipes.map((name,index) => <Recipe key={index} 
                                                      recipeIndex={index} 
                                                      recipeTitle={name.name} 
-                                                     ingredientsList={name.ingredients.toString().replace(/,/g, ", ")}/>)}
+                                                     ingredientsList={name.ingredients.toString().replace(/,/g, ", ")} 
+                                                     recipesLength={recipes.length} 
+                                                     updateWatcher={this.monitorUpdates}/>)}
                 </ul>                    
                 <AddRecipe updateWatcher={this.monitorUpdates}/>
             </div>

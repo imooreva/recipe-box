@@ -21913,7 +21913,8 @@
 	        var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
 	        _this.state = {
-	            updated: false
+	            updated: false,
+	            latestRecipes: recipes
 	        };
 	        _this.monitorUpdates = _this.monitorUpdates.bind(_this);
 	        return _this;
@@ -21923,21 +21924,23 @@
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            console.log('component mounted...');
-	            setTimeout(function () {
-	                RecipeList();
-	            }, 50);
 	        }
 	    }, {
 	        key: 'monitorUpdates',
 	        value: function monitorUpdates() {
 	            console.log('updating...');
 	            this.setState({
-	                updated: true
+	                date: Date(),
+	                updated: true,
+	                latestRecipes: recipes
 	            });
+	            //RecipeList();
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+
 	            return React.createElement(
 	                'div',
 	                null,
@@ -21948,7 +21951,9 @@
 	                        return React.createElement(Recipe, { key: index,
 	                            recipeIndex: index,
 	                            recipeTitle: name.name,
-	                            ingredientsList: name.ingredients.toString().replace(/,/g, ", ") });
+	                            ingredientsList: name.ingredients.toString().replace(/,/g, ", "),
+	                            recipesLength: recipes.length,
+	                            updateWatcher: _this2.monitorUpdates });
 	                    })
 	                ),
 	                React.createElement(AddRecipe, { updateWatcher: this.monitorUpdates })
@@ -22008,7 +22013,7 @@
 	            var recipe = $('#reveal-recipe-name').val();
 	            var ingredients = $('#reveal-ingredients').val();
 	            if (recipe == '' || ingredients == '') {
-	                return;
+	                return this.close();
 	            }
 	            if (checkRecipes(recipe) >= 0) {
 	                updateRecipe(recipe, ingredients);
@@ -22172,9 +22177,17 @@
 	        key: 'deleteRecipe',
 	        value: function deleteRecipe(e) {
 	            var index = e.currentTarget.value;
-	            recipes.splice(index, 1);
-	            RecipeList();
+	            if (confirm('Delete recipe for ' + recipes[index].name + '?')) {
+	                recipes.splice(index, 1);
+	                RecipeList();
+	                this.props.updateWatcher();
+	            }
 	        }
+	        //shouldComponentUpdate() {
+	        //    RecipeList();
+	        //    return true;
+	        //}
+
 	    }, {
 	        key: 'render',
 	        value: function render() {
