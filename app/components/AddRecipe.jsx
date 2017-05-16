@@ -12,6 +12,7 @@ class AddRecipe extends React.Component {
         this.add = this.add.bind(this);
         this.checkExisting = this.checkExisting.bind(this);
         this.close = this.close.bind(this);
+        this.resetModal = this.resetModal.bind(this);
     }
     
     add() {        
@@ -44,23 +45,30 @@ class AddRecipe extends React.Component {
         }
     }
     
+    resetModal() {
+        $('#modal-mode-span').html('Add Your Recipe');
+        $('#reveal-recipe-name').val('');
+        $('#reveal-ingredients').val('');
+        $('#recipe-exists-span').css('visibility', 'hidden');
+    }
+    
     render() {        
         return (
             <div>
                 <div className="reveal" id="addRecipe" data-reveal>
-                    <h3>Add Your Recipe</h3>
+                    <h3><span id="modal-mode-span">Add New Recipe</span></h3>
                     <form>
                         <input type="text" label="Recipe" placeholder="Recipe name" id="reveal-recipe-name" onChange={this.checkExisting}/>
                         <input type="text" label="Ingredients" placeholder="Enter ingredients separated by commas" id="reveal-ingredients"/>
                     </form>
                     <span id="recipe-exists-span"><p>Recipe already exists; submitting will overwrite original record's ingredients.</p></span>
-                    <button className="button hollow" onClick={this.add}>Add it!</button>
+                    <button className="button hollow" onClick={this.add}>Submit</button>
                     <button className="close-button" data-close aria-label="Close modal" type="button" onClick={this.close}>
                         <span aria-hidden="true">[x]</span>
                     </button>
                 </div>
                 <div>
-                    <button className="button primary" data-open="addRecipe">Add Recipe</button>
+                    <button className="button primary" data-open="addRecipe" onClick={this.resetModal}>Add Recipe</button>
                 </div>
             </div>
         )

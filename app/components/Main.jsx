@@ -27,8 +27,8 @@ class Main extends React.Component {
             updated: true,
             latestRecipes: recipes
         });
-        //RecipeList();
     }
+    
     render() {
         return (
             <div>
@@ -37,7 +37,6 @@ class Main extends React.Component {
                                                      recipeIndex={index} 
                                                      recipeTitle={name.name} 
                                                      ingredientsList={name.ingredients.toString().replace(/,/g, ", ")} 
-                                                     recipesLength={recipes.length} 
                                                      updateWatcher={this.monitorUpdates}/>)}
                 </ul>                    
                 <AddRecipe updateWatcher={this.monitorUpdates}/>

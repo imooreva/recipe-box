@@ -8,6 +8,7 @@ class Recipe extends React.Component {
     constructor(props) {
         super(props);
         this.deleteRecipe = this.deleteRecipe.bind(this);
+        this.editRecipe = this.editRecipe.bind(this);
     }
 
     deleteRecipe(e) {
@@ -18,19 +19,22 @@ class Recipe extends React.Component {
             this.props.updateWatcher();
         }        
     }
-    //shouldComponentUpdate() {
-    //    RecipeList();
-    //    return true;
-    //}
+    
+    editRecipe(e) {
+        $('#modal-mode-span').html('Edit Existing Recipe');
+        let index = e.currentTarget.value;
+        $('#reveal-recipe-name').val(recipes[index].name);
+        $('#reveal-ingredients').val(recipes[index].ingredients.toString().replace(/,/g,', '));
+    }
+    
     render() {
-        let i = this.props.recipeIndex
-        console.log(i);
+        let i = this.props.recipeIndex;
         return (
             <li key={i} className="accordion-item" data-accordion-item>
                 <a href="#" className="accordion-title">{this.props.recipeTitle}</a>
                 <div className="accordion-content" data-tab-content>
                     <p>{this.props.ingredientsList}</p>
-                    <button className="button success">Edit</button>
+                    <button className="button success" value={i} data-open="addRecipe" onClick={this.editRecipe}>Edit</button>
                     <button className="button alert" value={i} onClick={this.deleteRecipe}>Delete</button>
                 </div>
             </li>
