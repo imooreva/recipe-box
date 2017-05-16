@@ -1,7 +1,9 @@
 var recipes = (typeof localStorage["_imooreva_recipes"] != "undefined") ? JSON.parse(localStorage["_imooreva_recipes"]) : [
     {name: "Pumpkin Pie", ingredients: ["Pumpkin Puree", "Sweetened Condensed Milk", "Eggs", "Pumpkin Pie Spice", "Pie Crust"]}, 
     {name: "Stir Fry", ingredients: ["Beef", "Assorted Vegetables", "Soy Sauce", "Chili Paste", "Herbs and Spice"]}, 
-    {name: "Pancakes", ingredients: ["Flour", "Sugar", "Baking Powder", "Eggs", "Buttermilk"]}
+    {name: "Pancakes", ingredients: ["Flour", "Sugar", "Baking Powder", "Eggs", "Buttermilk"]},
+    {name: "Pizza", ingredients: ["Dough", "Tomato Sauce", "Mozzarella", "Sausage", "Peppers"]},
+    {name: "Cheesecake", ingredients: ["Cream Cheese", "Crust", "Eggs", "Vanilla Extract"]}
 ]
 
 var checkRecipes = (n) => {

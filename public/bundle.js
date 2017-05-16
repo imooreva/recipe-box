@@ -21920,8 +21920,17 @@
 	    }
 
 	    _createClass(Main, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            console.log('component mounted...');
+	            setTimeout(function () {
+	                RecipeList();
+	            }, 50);
+	        }
+	    }, {
 	        key: 'monitorUpdates',
 	        value: function monitorUpdates() {
+	            console.log('updating...');
 	            this.setState({
 	                updated: true
 	            });
@@ -21942,7 +21951,7 @@
 	                            ingredientsList: name.ingredients.toString().replace(/,/g, ", ") });
 	                    })
 	                ),
-	                React.createElement(AddRecipe, { onSubmit: this.monitorUpdates })
+	                React.createElement(AddRecipe, { updateWatcher: this.monitorUpdates })
 	            );
 	        }
 	    }]);
@@ -21971,6 +21980,8 @@
 	var React = __webpack_require__(8);
 	var ReactDOM = __webpack_require__(43);
 
+	var Main = __webpack_require__(189);
+
 	var _require = __webpack_require__(191),
 	    recipes = _require.recipes,
 	    checkRecipes = _require.checkRecipes,
@@ -21985,9 +21996,6 @@
 
 	        var _this = _possibleConstructorReturn(this, (AddRecipe.__proto__ || Object.getPrototypeOf(AddRecipe)).call(this, props));
 
-	        _this.state = {
-	            updated: false
-	        };
 	        _this.add = _this.add.bind(_this);
 	        _this.checkExisting = _this.checkExisting.bind(_this);
 	        _this.close = _this.close.bind(_this);
@@ -22004,16 +22012,14 @@
 	            }
 	            if (checkRecipes(recipe) >= 0) {
 	                updateRecipe(recipe, ingredients);
-	                return;
-	            } else {
+	                this.props.updateWatcher();
+	                return this.close;
+	            } else if (checkRecipes(recipe) == -1) {
 	                recipes.push({ name: recipe, ingredients: ingredients.replace(/\s{2,}/g, '').split(',') });
 	                RecipeList();
+	                this.props.updateWatcher();
+	                return this.close;
 	            }
-	            this.setState({
-	                updated: true
-	            });
-	            this.props.updateWatcher;
-	            this.close;
 	        }
 	    }, {
 	        key: 'close',
@@ -22023,7 +22029,6 @@
 	    }, {
 	        key: 'checkExisting',
 	        value: function checkExisting() {
-	            console.log(checkRecipes($('#reveal-recipe-name').val()));
 	            if (checkRecipes($('#reveal-recipe-name').val()) >= 0) {
 	                $('#recipe-exists-span').css('visibility', 'visible');
 	            } else {
@@ -22061,7 +22066,7 @@
 	                    ),
 	                    React.createElement(
 	                        'button',
-	                        { type: 'submit', className: 'button hollow', onClick: this.add },
+	                        { className: 'button hollow', onClick: this.add },
 	                        'Add it!'
 	                    ),
 	                    React.createElement(
@@ -22102,7 +22107,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var recipes = typeof localStorage["_imooreva_recipes"] != "undefined" ? JSON.parse(localStorage["_imooreva_recipes"]) : [{ name: "Pumpkin Pie", ingredients: ["Pumpkin Puree", "Sweetened Condensed Milk", "Eggs", "Pumpkin Pie Spice", "Pie Crust"] }, { name: "Stir Fry", ingredients: ["Beef", "Assorted Vegetables", "Soy Sauce", "Chili Paste", "Herbs and Spice"] }, { name: "Pancakes", ingredients: ["Flour", "Sugar", "Baking Powder", "Eggs", "Buttermilk"] }];
+	var recipes = typeof localStorage["_imooreva_recipes"] != "undefined" ? JSON.parse(localStorage["_imooreva_recipes"]) : [{ name: "Pumpkin Pie", ingredients: ["Pumpkin Puree", "Sweetened Condensed Milk", "Eggs", "Pumpkin Pie Spice", "Pie Crust"] }, { name: "Stir Fry", ingredients: ["Beef", "Assorted Vegetables", "Soy Sauce", "Chili Paste", "Herbs and Spice"] }, { name: "Pancakes", ingredients: ["Flour", "Sugar", "Baking Powder", "Eggs", "Buttermilk"] }, { name: "Pizza", ingredients: ["Dough", "Tomato Sauce", "Mozzarella", "Sausage", "Peppers"] }, { name: "Cheesecake", ingredients: ["Cream Cheese", "Crust", "Eggs", "Vanilla Extract"] }];
 
 	var checkRecipes = function checkRecipes(n) {
 	    for (var i = 0; i < recipes.length; i++) {
@@ -22159,22 +22164,25 @@
 
 	        var _this = _possibleConstructorReturn(this, (Recipe.__proto__ || Object.getPrototypeOf(Recipe)).call(this, props));
 
-	        _this.delete = _this.delete.bind(_this);
+	        _this.deleteRecipe = _this.deleteRecipe.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(Recipe, [{
-	        key: 'delete',
-	        value: function _delete(i) {
-	            recipes.splice(i, 1);
+	        key: 'deleteRecipe',
+	        value: function deleteRecipe(e) {
+	            var index = e.currentTarget.value;
+	            recipes.splice(index, 1);
 	            RecipeList();
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var i = this.props.recipeIndex;
+	            console.log(i);
 	            return React.createElement(
 	                'li',
-	                { key: this.props.recipeIndex, className: 'accordion-item', 'data-accordion-item': true },
+	                { key: i, className: 'accordion-item', 'data-accordion-item': true },
 	                React.createElement(
 	                    'a',
 	                    { href: '#', className: 'accordion-title' },
@@ -22195,7 +22203,7 @@
 	                    ),
 	                    React.createElement(
 	                        'button',
-	                        { className: 'button alert' },
+	                        { className: 'button alert', value: i, onClick: this.deleteRecipe },
 	                        'Delete'
 	                    )
 	                )

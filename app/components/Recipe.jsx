@@ -7,27 +7,29 @@ class Recipe extends React.Component {
 
     constructor(props) {
         super(props);
-        this.delete = this.delete.bind(this);
+        this.deleteRecipe = this.deleteRecipe.bind(this);
     }
 
-    delete(i) {
-        recipes.splice(i,1);
+    deleteRecipe(e) {
+        let index = e.currentTarget.value;
+        recipes.splice(index, 1);
         RecipeList();
     }
 
     render() {
+        let i = this.props.recipeIndex
+        console.log(i);
         return (
-            <li key={this.props.recipeIndex} className="accordion-item" data-accordion-item>
+            <li key={i} className="accordion-item" data-accordion-item>
                 <a href="#" className="accordion-title">{this.props.recipeTitle}</a>
                 <div className="accordion-content" data-tab-content>
                     <p>{this.props.ingredientsList}</p>
                     <button className="button success">Edit</button>
-                    <button className="button alert">Delete</button>
+                    <button className="button alert" value={i} onClick={this.deleteRecipe}>Delete</button>
                 </div>
             </li>
         )
     }
 };
-
 
 module.exports = Recipe;

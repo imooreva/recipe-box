@@ -15,7 +15,13 @@ class Main extends React.Component {
         this.monitorUpdates = this.monitorUpdates.bind(this);
     }
     
+    componentDidMount() {
+        console.log('component mounted...');
+        setTimeout( ()=> { RecipeList() }, 50)
+    }
+    
     monitorUpdates() {
+        console.log('updating...');
         this.setState({
             updated: true
         });
@@ -30,7 +36,7 @@ class Main extends React.Component {
                                                      recipeTitle={name.name} 
                                                      ingredientsList={name.ingredients.toString().replace(/,/g, ", ")}/>)}
                 </ul>                    
-                <AddRecipe onSubmit={this.monitorUpdates}/>
+                <AddRecipe updateWatcher={this.monitorUpdates}/>
             </div>
         )
     }
