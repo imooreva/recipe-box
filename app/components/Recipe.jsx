@@ -24,7 +24,7 @@ class Recipe extends React.Component {
         $('#modal-mode-span').html('Edit Existing Recipe');
         let index = e.currentTarget.value;
         $('#reveal-recipe-name').val(recipes[index].name);
-        $('#reveal-ingredients').val(recipes[index].ingredients.toString().replace(/,/g,', '));
+        $('#reveal-ingredients').val(recipes[index].ingredients.toString().replace(/,\W*/g,', '));
     }
     
     render() {
@@ -34,7 +34,7 @@ class Recipe extends React.Component {
                 <a href="#" className="accordion-title">{this.props.recipeTitle}</a>
                 <div className="accordion-content" data-tab-content>
                     <p>{this.props.ingredientsList}</p>
-                    <button className="button success" value={i} data-open="addRecipe" onClick={this.editRecipe}>Edit</button>
+                    <button className="button hollow" value={i} data-open="addRecipe" onClick={this.editRecipe}>Edit</button>
                     <button className="button alert" value={i} onClick={this.deleteRecipe}>Delete</button>
                 </div>
             </li>

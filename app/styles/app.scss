@@ -7,22 +7,60 @@
 
 //components
 
+body {
+    background-color: #43246A;
+    color: #F0F8FF;
+}
+
+li>a.accordion-title {
+    background-color: #F0F8FF;
+}
+
+.accordion-item {
+    border: 4px;
+}
+
+.accordion-title {
+    font-size: 1.125rem;
+    font-weight: bold;
+}
+
 #app-heading {
+    /*color: #F0F8FF; //aliceblue;*/
     margin-top: 1rem;
     text-align: center;    
 }
 
 #addRecipe {
     border-radius: 0.5rem;
+    background-color: #F0F8FF;
+}
+
+#footer {
+    text-align: center;
+}
+
+#footer>a {
+    color: #FF8B4D;
+    text-decoration: none;
+}
+
+#footer>a:hover {
+    text-decoration: underline;
+}
+
+#hr-1 {
+    border: 1px solid #EEEEEE;
+    margin-top: 3rem;
+}
+
+#modal-mode-span {
+    color: #424242;
 }
 
 #recipe-exists-span {
     color: red;
     visibility: hidden;
-}
-
-.accordion-title {
-    font-size: 1.125rem;
 }
 
 button[class^="button"]{

@@ -4,7 +4,6 @@ var ReactDOM = require('react-dom');
 var Main = require('Main');
 var {recipes, checkRecipes, updateRecipe, RecipeList} = require('RecipeList');
 
-
 class AddRecipe extends React.Component {
 
     constructor(props) {
@@ -15,26 +14,27 @@ class AddRecipe extends React.Component {
         this.resetModal = this.resetModal.bind(this);
     }
     
-    add() {        
+    add(e) {        
         let recipe = $('#reveal-recipe-name').val();
         let ingredients = $('#reveal-ingredients').val();
         if (recipe == '' || ingredients == '') {
-            return this.close();
+            return this.close;
         }
         if (checkRecipes(recipe) >= 0) {
             updateRecipe(recipe,ingredients);
             this.props.updateWatcher();
             return this.close;
         } else if (checkRecipes(recipe) == -1) {
-            recipes.push({name: recipe, ingredients: ingredients.replace(/\s{2,}/g, '').split(',')});
+            //recipes.push({name: recipe, ingredients: ingredients.replace(/\s+/g,',').trim().split(',')});
+            recipes.push({name: recipe, ingredients: ingredients.replace(/\s{2,}/g,'').trim().split(',')});
             RecipeList();
             this.props.updateWatcher();
             return this.close;
         }
     }
     
-    close() {
-        $('#addRecipe').foundation('close');
+    close(e) {
+        $('.reveal').foundation('toggle');
     }
     
     checkExisting() {
@@ -52,7 +52,8 @@ class AddRecipe extends React.Component {
         $('#recipe-exists-span').css('visibility', 'hidden');
     }
     
-    render() {        
+    render() {
+        
         return (
             <div>
                 <div className="reveal" id="addRecipe" data-reveal>
@@ -62,8 +63,8 @@ class AddRecipe extends React.Component {
                         <input type="text" label="Ingredients" placeholder="Enter ingredients separated by commas" id="reveal-ingredients"/>
                     </form>
                     <span id="recipe-exists-span"><p>Recipe already exists; submitting will overwrite original record's ingredients.</p></span>
-                    <button className="button hollow" onClick={this.add}>Submit</button>
-                    <button className="close-button" data-close aria-label="Close modal" type="button" onClick={this.close}>
+                    <button className="button hollow close-reveal" onClick={this.add}>Submit</button>
+                    <button className="close-reveal-modal close-button" data-close aria-label="Close modal" type="button" onClick={this.close}>
                         <span aria-hidden="true">[x]</span>
                     </button>
                 </div>

@@ -23,7 +23,7 @@ class Main extends React.Component {
     monitorUpdates() {
         console.log('updating...');
         this.setState({
-            date: Date(),
+            lastUpdate: Date(),
             updated: true,
             latestRecipes: recipes
         });
@@ -32,11 +32,11 @@ class Main extends React.Component {
     render() {
         return (
             <div>
-                <ul className="accordion" data-accordion data-allow-all-closed="true">
+                <ul className="accordion" data-accordion data-allow-all-closed="true" data-slide-speed="150">
                     {recipes.map((name,index) => <Recipe key={index} 
                                                      recipeIndex={index} 
                                                      recipeTitle={name.name} 
-                                                     ingredientsList={name.ingredients.toString().replace(/,/g, ", ")} 
+                                                     ingredientsList={name.ingredients.toString().replace(/,\W*/g, ", ")} 
                                                      updateWatcher={this.monitorUpdates}/>)}
                 </ul>                    
                 <AddRecipe updateWatcher={this.monitorUpdates}/>

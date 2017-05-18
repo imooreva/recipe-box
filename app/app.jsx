@@ -16,8 +16,12 @@ class App extends React.Component {
     render() {
         return (
             <div className="column small-centered medium-8 large-8">
-                <h2 id="app-heading">Recipe Box</h2>
+                <h1 id="app-heading">Recipe Box</h1>
                 <Main/>
+                <hr id="hr-1"/>
+                <div>
+                    <p id="footer">Author's source code on <a href="https://github.com/imooreva/recipe-box" target="_blank">Github</a>.</p>
+                </div>
             </div>
         );
     }    
