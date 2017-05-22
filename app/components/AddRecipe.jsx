@@ -17,24 +17,30 @@ class AddRecipe extends React.Component {
     add(e) {        
         let recipe = $('#reveal-recipe-name').val();
         let ingredients = $('#reveal-ingredients').val();
-        if (recipe == '' || ingredients == '') {
-            return this.close;
-        }
-        if (checkRecipes(recipe) >= 0) {
+        if (recipe.length == 0 || recipe == null) {
+            console.log('nothing here');
+            this.close();
+            return;
+        } else if (recipe.length > 0 && checkRecipes(recipe) >= 0) {
+            if (ingredients.length == 0) {
+                ingredients = 'No ingredients entered'
+            };
             updateRecipe(recipe,ingredients);
-            this.props.updateWatcher();
-            return this.close;
-        } else if (checkRecipes(recipe) == -1) {
+            this.close();
+            return this.props.updateWatcher();
+        } else if (recipe.length > 0 && checkRecipes(recipe) == -1) {
             //recipes.push({name: recipe, ingredients: ingredients.replace(/\s+/g,',').trim().split(',')});
             recipes.push({name: recipe, ingredients: ingredients.replace(/\s{2,}/g,'').trim().split(',')});
             RecipeList();
-            this.props.updateWatcher();
-            return this.close;
+            this.close();
+            return this.props.updateWatcher();
         }
     }
     
-    close(e) {
-        $('.reveal').foundation('toggle');
+    close() {
+        //e.preventDefault();
+        $('.reveal-box').foundation('close');
+        console.log('it closed!');
     }
     
     checkExisting() {
@@ -56,7 +62,7 @@ class AddRecipe extends React.Component {
         
         return (
             <div>
-                <div className="reveal" id="addRecipe" data-reveal>
+                <div className="reveal reveal-box" id="addRecipe" data-reveal>
                     <h3><span id="modal-mode-span">Add New Recipe</span></h3>
                     <form>
                         <input type="text" label="Recipe" placeholder="Recipe name" id="reveal-recipe-name" onChange={this.checkExisting}/>

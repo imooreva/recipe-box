@@ -22027,25 +22027,31 @@
 	        value: function add(e) {
 	            var recipe = $('#reveal-recipe-name').val();
 	            var ingredients = $('#reveal-ingredients').val();
-	            if (recipe == '' || ingredients == '') {
-	                return this.close;
-	            }
-	            if (checkRecipes(recipe) >= 0) {
+	            if (recipe.length == 0 || recipe == null) {
+	                console.log('nothing here');
+	                this.close();
+	                return;
+	            } else if (recipe.length > 0 && checkRecipes(recipe) >= 0) {
+	                if (ingredients.length == 0) {
+	                    ingredients = 'No ingredients entered';
+	                };
 	                updateRecipe(recipe, ingredients);
-	                this.props.updateWatcher();
-	                return this.close;
-	            } else if (checkRecipes(recipe) == -1) {
+	                this.close();
+	                return this.props.updateWatcher();
+	            } else if (recipe.length > 0 && checkRecipes(recipe) == -1) {
 	                //recipes.push({name: recipe, ingredients: ingredients.replace(/\s+/g,',').trim().split(',')});
 	                recipes.push({ name: recipe, ingredients: ingredients.replace(/\s{2,}/g, '').trim().split(',') });
 	                RecipeList();
-	                this.props.updateWatcher();
-	                return this.close;
+	                this.close();
+	                return this.props.updateWatcher();
 	            }
 	        }
 	    }, {
 	        key: 'close',
-	        value: function close(e) {
-	            $('.reveal').foundation('toggle');
+	        value: function close() {
+	            //e.preventDefault();
+	            $('.reveal-box').foundation('close');
+	            console.log('it closed!');
 	        }
 	    }, {
 	        key: 'checkExisting',
@@ -22073,7 +22079,7 @@
 	                null,
 	                React.createElement(
 	                    'div',
-	                    { className: 'reveal', id: 'addRecipe', 'data-reveal': true },
+	                    { className: 'reveal reveal-box', id: 'addRecipe', 'data-reveal': true },
 	                    React.createElement(
 	                        'h3',
 	                        null,
