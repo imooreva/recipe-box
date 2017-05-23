@@ -21933,6 +21933,7 @@
 	            latestRecipes: recipes
 	        };
 	        _this.monitorUpdates = _this.monitorUpdates.bind(_this);
+	        _this.refreshAccordion = _this.refreshAccordion.bind(_this);
 	        return _this;
 	    }
 
@@ -21940,6 +21941,7 @@
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            console.log('component mounted...');
+	            RecipeList();
 	        }
 	    }, {
 	        key: 'monitorUpdates',
@@ -21952,6 +21954,12 @@
 	            });
 	        }
 	    }, {
+	        key: 'refreshAccordion',
+	        value: function refreshAccordion() {
+	            console.log('refreshing accordion...');
+	            Foundation.reInit('accordion');
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
@@ -21961,16 +21969,17 @@
 	                null,
 	                React.createElement(
 	                    'ul',
-	                    { className: 'accordion', 'data-accordion': true, 'data-allow-all-closed': 'true', 'data-slide-speed': '150' },
+	                    { className: 'accordion', value: recipes.length, 'data-accordion': true, 'data-allow-all-closed': 'true', 'data-slide-speed': '150' },
 	                    recipes.map(function (name, index) {
 	                        return React.createElement(Recipe, { key: index,
 	                            recipeIndex: index,
 	                            recipeTitle: name.name,
 	                            ingredientsList: name.ingredients.toString().replace(/,\W*/g, ", "),
-	                            updateWatcher: _this2.monitorUpdates });
+	                            monitorUpdates: _this2.monitorUpdates,
+	                            refreshAccordion: _this2.refreshAccordion });
 	                    })
 	                ),
-	                React.createElement(AddRecipe, { updateWatcher: this.monitorUpdates })
+	                React.createElement(AddRecipe, { monitorUpdates: this.monitorUpdates, refreshAccordion: this.refreshAccordion })
 	            );
 	        }
 	    }]);
@@ -22024,7 +22033,9 @@
 
 	    _createClass(AddRecipe, [{
 	        key: 'add',
-	        value: function add(e) {
+	        value: function add() {
+	            var _this2 = this;
+
 	            var recipe = $('#reveal-recipe-name').val();
 	            var ingredients = $('#reveal-ingredients').val();
 	            if (recipe.length == 0 || recipe == null) {
@@ -22037,21 +22048,22 @@
 	                };
 	                updateRecipe(recipe, ingredients);
 	                this.close();
-	                return this.props.updateWatcher();
+	                return this.props.monitorUpdates();
 	            } else if (recipe.length > 0 && checkRecipes(recipe) == -1) {
 	                //recipes.push({name: recipe, ingredients: ingredients.replace(/\s+/g,',').trim().split(',')});
 	                recipes.push({ name: recipe, ingredients: ingredients.replace(/\s{2,}/g, '').trim().split(',') });
 	                RecipeList();
 	                this.close();
-	                return this.props.updateWatcher();
+	                this.props.monitorUpdates();
+	                return setTimeout(function () {
+	                    _this2.props.refreshAccordion();
+	                }, 50);
 	            }
 	        }
 	    }, {
 	        key: 'close',
 	        value: function close() {
-	            //e.preventDefault();
-	            $('.reveal-box').foundation('close');
-	            console.log('it closed!');
+	            $('#addRecipe').foundation('close');
 	        }
 	    }, {
 	        key: 'checkExisting',
@@ -22079,7 +22091,7 @@
 	                null,
 	                React.createElement(
 	                    'div',
-	                    { className: 'reveal reveal-box', id: 'addRecipe', 'data-reveal': true },
+	                    { className: 'reveal', id: 'addRecipe', 'data-reveal': true },
 	                    React.createElement(
 	                        'h3',
 	                        null,
@@ -22147,7 +22159,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	var recipes = typeof localStorage["_imooreva_recipes"] != "undefined" ? JSON.parse(localStorage["_imooreva_recipes"]) : [{ name: "Pumpkin Pie", ingredients: ["Pumpkin Puree", "Sweetened Condensed Milk", "Eggs", "Pumpkin Pie Spice", "Pie Crust"] }, { name: "Stir Fry", ingredients: ["Beef", "Assorted Vegetables", "Soy Sauce", "Chili Paste", "Herbs and Spice"] }, { name: "Pancakes", ingredients: ["Flour", "Sugar", "Baking Powder", "Eggs", "Buttermilk"] }, { name: "Pizza", ingredients: ["Dough", "Tomato Sauce", "Mozzarella", "Sausage", "Peppers"] }, { name: "Cheesecake", ingredients: ["Cream Cheese", "Crust", "Eggs", "Vanilla Extract"] }];
+	var recipes = typeof localStorage["_imooreva_recipes"] != "undefined" ? JSON.parse(localStorage["_imooreva_recipes"]) : [{ name: "Pumpkin Pie", ingredients: ["Pumpkin Puree", "Sweetened Condensed Milk", "Eggs", "Pumpkin Pie Spice", "Pie Crust"] }, { name: "Stir Fry", ingredients: ["Beef", "Assorted Vegetables", "Soy Sauce", "Chili Paste", "Herbs and Spice"] }, { name: "Pancakes", ingredients: ["Flour", "Sugar", "Baking Powder", "Eggs", "Buttermilk"] }, { name: "Pizza", ingredients: ["Dough", "Tomato Sauce", "Mozzarella", "Sausage", "Peppers"] }, { name: "Cheesecake", ingredients: ["Cream Cheese", "Crust", "Eggs", "Sugar", "Vanilla Extract"] }];
 
 	var checkRecipes = function checkRecipes(n) {
 	    for (var i = 0; i < recipes.length; i++) {
@@ -22212,11 +22224,16 @@
 	    _createClass(Recipe, [{
 	        key: 'deleteRecipe',
 	        value: function deleteRecipe(e) {
+	            var _this2 = this;
+
 	            var index = e.currentTarget.value;
 	            if (confirm('Delete recipe for ' + recipes[index].name + '?')) {
 	                recipes.splice(index, 1);
 	                RecipeList();
-	                this.props.updateWatcher();
+	                this.props.monitorUpdates();
+	                return setTimeout(function () {
+	                    _this2.props.refreshAccordion();
+	                }, 50);
 	            }
 	        }
 	    }, {
@@ -22241,7 +22258,7 @@
 	                ),
 	                React.createElement(
 	                    'div',
-	                    { className: 'accordion-content', 'data-tab-content': true },
+	                    { className: 'accordion-content', id: "ingredients-" + i, 'data-tab-content': true },
 	                    React.createElement(
 	                        'p',
 	                        null,

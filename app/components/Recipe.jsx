@@ -16,7 +16,8 @@ class Recipe extends React.Component {
         if (confirm(`Delete recipe for ${recipes[index].name}?`)) {
             recipes.splice(index, 1);
             RecipeList();
-            this.props.updateWatcher();
+            this.props.monitorUpdates();
+            return setTimeout( ()=> {this.props.refreshAccordion()}, 50);
         }        
     }
     
@@ -32,7 +33,7 @@ class Recipe extends React.Component {
         return (
             <li key={i} className="accordion-item" data-accordion-item>
                 <a href="#" className="accordion-title">{this.props.recipeTitle}</a>
-                <div className="accordion-content" data-tab-content>
+                <div className="accordion-content" id={"ingredients-"+i} data-tab-content>
                     <p>{this.props.ingredientsList}</p>
                     <button className="button hollow" value={i} data-open="addRecipe" onClick={this.editRecipe}>Edit</button>
                     <button className="button alert" value={i} onClick={this.deleteRecipe}>Delete</button>

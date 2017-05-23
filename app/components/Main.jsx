@@ -14,10 +14,12 @@ class Main extends React.Component {
             latestRecipes: recipes
         };
         this.monitorUpdates = this.monitorUpdates.bind(this);
+        this.refreshAccordion = this.refreshAccordion.bind(this);
     }
     
     componentDidMount() {
         console.log('component mounted...');
+        RecipeList();
     }
     
     monitorUpdates() {
@@ -29,17 +31,23 @@ class Main extends React.Component {
         });
     }
     
+    refreshAccordion() {
+        console.log('refreshing accordion...');
+        Foundation.reInit('accordion');
+    }
+    
     render() {
         return (
             <div>
-                <ul className="accordion" data-accordion data-allow-all-closed="true" data-slide-speed="150">
+                <ul className="accordion" value={recipes.length} data-accordion data-allow-all-closed="true" data-slide-speed="150">
                     {recipes.map((name,index) => <Recipe key={index} 
                                                      recipeIndex={index} 
                                                      recipeTitle={name.name} 
                                                      ingredientsList={name.ingredients.toString().replace(/,\W*/g, ", ")} 
-                                                     updateWatcher={this.monitorUpdates}/>)}
+                                                     monitorUpdates={this.monitorUpdates}
+                                                     refreshAccordion={this.refreshAccordion}/>)}
                 </ul>                    
-                <AddRecipe updateWatcher={this.monitorUpdates}/>
+                <AddRecipe monitorUpdates={this.monitorUpdates} refreshAccordion={this.refreshAccordion}/>
             </div>
         )
     }

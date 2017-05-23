@@ -14,7 +14,7 @@ class AddRecipe extends React.Component {
         this.resetModal = this.resetModal.bind(this);
     }
     
-    add(e) {        
+    add() {        
         let recipe = $('#reveal-recipe-name').val();
         let ingredients = $('#reveal-ingredients').val();
         if (recipe.length == 0 || recipe == null) {
@@ -27,20 +27,19 @@ class AddRecipe extends React.Component {
             };
             updateRecipe(recipe,ingredients);
             this.close();
-            return this.props.updateWatcher();
+            return this.props.monitorUpdates();
         } else if (recipe.length > 0 && checkRecipes(recipe) == -1) {
             //recipes.push({name: recipe, ingredients: ingredients.replace(/\s+/g,',').trim().split(',')});
             recipes.push({name: recipe, ingredients: ingredients.replace(/\s{2,}/g,'').trim().split(',')});
             RecipeList();
             this.close();
-            return this.props.updateWatcher();
+            this.props.monitorUpdates();
+            return setTimeout( ()=> {this.props.refreshAccordion()}, 50);
         }
     }
     
     close() {
-        //e.preventDefault();
-        $('.reveal-box').foundation('close');
-        console.log('it closed!');
+        $('#addRecipe').foundation('close');
     }
     
     checkExisting() {
@@ -62,7 +61,7 @@ class AddRecipe extends React.Component {
         
         return (
             <div>
-                <div className="reveal reveal-box" id="addRecipe" data-reveal>
+                <div className="reveal" id="addRecipe" data-reveal>
                     <h3><span id="modal-mode-span">Add New Recipe</span></h3>
                     <form>
                         <input type="text" label="Recipe" placeholder="Recipe name" id="reveal-recipe-name" onChange={this.checkExisting}/>

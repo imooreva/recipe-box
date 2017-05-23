@@ -3,7 +3,7 @@ var recipes = (typeof localStorage["_imooreva_recipes"] != "undefined") ? JSON.p
     {name: "Stir Fry", ingredients: ["Beef", "Assorted Vegetables", "Soy Sauce", "Chili Paste", "Herbs and Spice"]}, 
     {name: "Pancakes", ingredients: ["Flour", "Sugar", "Baking Powder", "Eggs", "Buttermilk"]},
     {name: "Pizza", ingredients: ["Dough", "Tomato Sauce", "Mozzarella", "Sausage", "Peppers"]},
-    {name: "Cheesecake", ingredients: ["Cream Cheese", "Crust", "Eggs", "Vanilla Extract"]}
+    {name: "Cheesecake", ingredients: ["Cream Cheese", "Crust", "Eggs", "Sugar", "Vanilla Extract"]}
 ]
 
 var checkRecipes = (n) => {
