@@ -18,7 +18,6 @@ class AddRecipe extends React.Component {
         let recipe = $('#reveal-recipe-name').val();
         let ingredients = $('#reveal-ingredients').val();
         if (recipe.length == 0 || recipe == null) {
-            console.log('nothing here');
             this.close();
             return;
         } else if (recipe.length > 0 && checkRecipes(recipe) >= 0) {
@@ -29,8 +28,7 @@ class AddRecipe extends React.Component {
             this.close();
             return this.props.monitorUpdates();
         } else if (recipe.length > 0 && checkRecipes(recipe) == -1) {
-            //recipes.push({name: recipe, ingredients: ingredients.replace(/\s+/g,',').trim().split(',')});
-            recipes.push({name: recipe, ingredients: ingredients.replace(/\s{2,}/g,'').trim().split(',')});
+            recipes.push({name: recipe.replace(/\s{2,}/g,'').trim(), ingredients: ingredients.replace(/\s{2,}/g,'').replace(/\,{2,}/g,',').trim().split(',')});
             RecipeList();
             this.close();
             this.props.monitorUpdates();
@@ -61,7 +59,7 @@ class AddRecipe extends React.Component {
         
         return (
             <div>
-                <div className="reveal" id="addRecipe" data-reveal>
+                <div className="reveal" id="addRecipe" data-reveal data-close-on-esc>
                     <h3><span id="modal-mode-span">Add New Recipe</span></h3>
                     <form>
                         <input type="text" label="Recipe" placeholder="Recipe name" id="reveal-recipe-name" onChange={this.checkExisting}/>

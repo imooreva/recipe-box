@@ -9,11 +9,13 @@ class Recipe extends React.Component {
         super(props);
         this.deleteRecipe = this.deleteRecipe.bind(this);
         this.editRecipe = this.editRecipe.bind(this);
+        this.itemClose = this.itemClose.bind(this);
     }
 
     deleteRecipe(e) {
         let index = e.currentTarget.value;
         if (confirm(`Delete recipe for ${recipes[index].name}?`)) {
+            this.itemClose();
             recipes.splice(index, 1);
             RecipeList();
             this.props.monitorUpdates();
@@ -24,8 +26,12 @@ class Recipe extends React.Component {
     editRecipe(e) {
         $('#modal-mode-span').html('Edit Existing Recipe');
         let index = e.currentTarget.value;
-        $('#reveal-recipe-name').val(recipes[index].name);
-        $('#reveal-ingredients').val(recipes[index].ingredients.toString().replace(/,\W*/g,', '));
+        $('#reveal-recipe-name').val(recipes[index].name.replace(/\s{2,}/g,'').trim());
+        $('#reveal-ingredients').val(recipes[index].ingredients.toString().replace(/\s{2,}/g,''));
+    }
+    
+    itemClose() {
+        $('.accordion').foundation('up', $('.accordion-content'));
     }
     
     render() {

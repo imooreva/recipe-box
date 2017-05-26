@@ -21,8 +21,8 @@ var RecipeList = () => {
 
 var updateRecipe = (n, ingredients) => {
     if (checkRecipes(n) >= 0) {
-        let arrIndex = checkRecipes(n);
-        recipes[arrIndex].ingredients = ingredients.replace(/\s{2,}/g, '').split(',');
+        let arrIndex = checkRecipes(n.replace(/\s{2,}/g,'').trim());
+        recipes[arrIndex].ingredients = ingredients.replace(/\s{2,}/g,'').replace(/\,{2,}/g,',').trim().split(',');
     }
     RecipeList();
 }

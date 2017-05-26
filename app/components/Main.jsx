@@ -39,7 +39,7 @@ class Main extends React.Component {
     render() {
         return (
             <div>
-                <ul className="accordion" value={recipes.length} data-accordion data-allow-all-closed="true" data-slide-speed="150">
+                <ul className="accordion" value={recipes.length} data-accordion data-allow-all-closed="true" data-slide-speed="0">
                     {recipes.map((name,index) => <Recipe key={index} 
                                                      recipeIndex={index} 
                                                      recipeTitle={name.name} 
