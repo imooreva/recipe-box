@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var AddRecipe = require('AddRecipe');
 var Recipe = require('Recipe')
-var {recipes, RecipeList} = require('RecipeList');
+var {recipes, setRecipeList} = require('RecipeList');
 
 
 class Main extends React.Component {
@@ -18,21 +18,18 @@ class Main extends React.Component {
     }
     
     componentDidMount() {
-        console.log('component mounted...');
-        RecipeList();
+        setRecipeList();
     }
     
     monitorUpdates() {
-        console.log('updating...');
         this.setState({
             lastUpdate: Date(),
             updated: true,
             latestRecipes: recipes
         });
     }
-    
+    //updates list of recipes on screen
     refreshAccordion() {
-        console.log('refreshing accordion...');
         Foundation.reInit('accordion');
     }
     
@@ -43,7 +40,7 @@ class Main extends React.Component {
                     {recipes.map((name,index) => <Recipe key={index} 
                                                      recipeIndex={index} 
                                                      recipeTitle={name.name} 
-                                                     ingredientsList={name.ingredients.toString().replace(/,\W*/g, ", ")} 
+                                                     ingredientsList={name.ingredients.toString().replace(/,+\s*/g, ", ")} 
                                                      monitorUpdates={this.monitorUpdates}
                                                      refreshAccordion={this.refreshAccordion}/>)}
                 </ul>                    

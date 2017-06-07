@@ -14,7 +14,7 @@ module.exports = {
         new webpack.ProvidePlugin({
             '$': 'jquery',
             'jQuery': 'jquery'
-        //save for production build later
+        //for production build later
         }),
         new webpack.DefinePlugin({
             'process.env': {

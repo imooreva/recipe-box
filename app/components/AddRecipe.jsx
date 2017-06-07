@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var Main = require('Main');
-var {recipes, checkRecipes, updateRecipe, RecipeList} = require('RecipeList');
+var {recipes, checkRecipes, updateRecipe, setRecipeList} = require('RecipeList');
 
 class AddRecipe extends React.Component {
 
@@ -16,20 +16,21 @@ class AddRecipe extends React.Component {
     
     add() {        
         let recipe = $('#reveal-recipe-name').val();
-        let ingredients = $('#reveal-ingredients').val();
+        let ingredients = ($('#reveal-ingredients').val().length > 0) ? $('#reveal-ingredients').val() : 'No ingredients entered';
         if (recipe.length == 0 || recipe == null) {
-            this.close();
-            return;
+            return this.close();
         } else if (recipe.length > 0 && checkRecipes(recipe) >= 0) {
-            if (ingredients.length == 0) {
-                ingredients = 'No ingredients entered'
-            };
             updateRecipe(recipe,ingredients);
             this.close();
             return this.props.monitorUpdates();
         } else if (recipe.length > 0 && checkRecipes(recipe) == -1) {
-            recipes.push({name: recipe.replace(/\s{2,}/g,'').trim(), ingredients: ingredients.replace(/\s{2,}/g,'').replace(/\,{2,}/g,',').trim().split(',')});
-            RecipeList();
+            let trimmedName = recipe.replace(/,+/g,',').trim();
+            let trimmedIngredients = ingredients.replace(/,+/g,',').trim().split(',');
+            recipes.push({
+                name: trimmedName,
+                ingredients: trimmedIngredients
+            });
+            setRecipeList();
             this.close();
             this.props.monitorUpdates();
             return setTimeout( ()=> {this.props.refreshAccordion()}, 50);

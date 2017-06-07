@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var {recipes, RecipeList} = require('RecipeList');
+var {recipes, setRecipeList} = require('RecipeList');
 
 
 class Recipe extends React.Component {
@@ -17,17 +17,19 @@ class Recipe extends React.Component {
         if (confirm(`Delete recipe for ${recipes[index].name}?`)) {
             this.itemClose();
             recipes.splice(index, 1);
-            RecipeList();
+            setRecipeList();
             this.props.monitorUpdates();
             return setTimeout( ()=> {this.props.refreshAccordion()}, 50);
         }        
     }
     
     editRecipe(e) {
-        $('#modal-mode-span').html('Edit Existing Recipe');
         let index = e.currentTarget.value;
-        $('#reveal-recipe-name').val(recipes[index].name.replace(/\s{2,}/g,'').trim());
-        $('#reveal-ingredients').val(recipes[index].ingredients.toString().replace(/\s{2,}/g,''));
+        let rName = recipes[index].name;
+        let rIngredients = recipes[index].ingredients.toString().replace(/\s*,+\s*/g,', ');
+        $('#modal-mode-span').html('Edit Existing Recipe');        
+        $('#reveal-recipe-name').val(rName);
+        $('#reveal-ingredients').val(rIngredients);
     }
     
     itemClose() {

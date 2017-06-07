@@ -20,7 +20,7 @@ class App extends React.Component {
                 <Main/>
                 <hr id="hr-1"/>
                 <div>
-                    <p id="footer">Author's source code on <a href="https://github.com/imooreva/recipe-box" target="_blank">Github</a>.</p>
+                    <p id="gitlink">Source code on <a href="https://github.com/imooreva/recipe-box" target="_blank">Github</a>.</p>
                 </div>
             </div>
         );
