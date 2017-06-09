@@ -8,32 +8,30 @@
 //components
 
 body {
-    background-color: #43246A;
+    background-color: #3D215F; //#43246A;
     color: #F0F8FF;
 }
 
-li>a.accordion-title {
+button[class^="button"] {
+    border-radius: 0.3125rem;
+    font-size: 1.0rem;
+    margin: 0 0.25rem;
+}
+
+a.accordion-title {
     background-color: #F0F8FF;
-}
-
-.accordion-item {
-    border: 4px;
-}
-
-.accordion-title {
-    font-size: 1.125rem;
-    font-weight: bold;
-}
-
-#app-heading {
-    /*color: #F0F8FF; //aliceblue;*/
-    margin-top: 1rem;
-    text-align: center;    
+    font-size: 1.375rem;
 }
 
 #addRecipe {
     border-radius: 0.5rem;
     background-color: #F0F8FF;
+}
+
+#app-heading {
+    /*color: #F0F8FF; //aliceblue;*/
+    margin-top: 1.0rem;
+    text-align: center;
 }
 
 #gitlink {
@@ -50,8 +48,8 @@ li>a.accordion-title {
 }
 
 #hr-1 {
-    border: 1px solid #EEEEEE;
-    margin-top: 3rem;
+    border: 0.125rem solid #EEEEEE;
+    margin-top: 3.0rem;
 }
 
 #modal-mode-span {
@@ -63,8 +61,25 @@ li>a.accordion-title {
     visibility: hidden;
 }
 
-button[class^="button"]{
-    border-radius: 5px;
-    font-size: 1rem;
-    margin: 0 0.125rem;
+.accordion-content>p {
+    font-size: 1.0rem;
+}
+
+.accordion-item {
+    border: 0.25rem;
+}
+
+@media only screen and (max-width: 480px) {
+    a.accordion-title {
+        font-size: 1.0rem;
+    }
+    button[class^="button"] {
+        font-size: 0.8125rem;
+    }
+    .accordion-content>p {
+        font-size: 0.8125rem;
+    }
+    #gitlink {
+        font-size: 0.8125rem;
+    }
 }

@@ -33,7 +33,7 @@ class AddRecipe extends React.Component {
             setRecipeList();
             this.close();
             this.props.monitorUpdates();
-            return setTimeout( ()=> {this.props.refreshAccordion()}, 50);
+            return setTimeout( ()=> { this.props.refreshAccordion() }, 50);
         }
     }
     

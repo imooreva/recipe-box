@@ -1,7 +1,7 @@
-var recipes = (typeof localStorage["_imooreva_recipes"] != "undefined") ? JSON.parse(localStorage["_imooreva_recipes"]) : [
-    {name: "Stir Fry", ingredients: ["Beef", "Assorted Vegetables", "Soy Sauce", "Chili Paste", "Herbs and Spice"]}, 
-    {name: "Spinach Artichoke Dip", ingredients: ["Spinach", "Artichoke Hearts", 'Cream Cheese', 'Parmesan Cheese', "Sour Cream", "Mayonnaise", "Minced Garlic", 'Red Pepper Flakes']},
-    {name: "Lemon Pound Cake", ingredients: ['Flour', 'Butter', 'Eggs', 'Sugar', 'Lemon Juice', 'Lemon Zest', 'Baking Powder', 'Vanilla Extract', 'Salt']}
+var recipes = (typeof localStorage['_imooreva_recipes'] != 'undefined') ? JSON.parse(localStorage['_imooreva_recipes']) : [
+    {name: 'Stir Fry', ingredients: ['Beef', 'Assorted Vegetables', 'Soy Sauce', 'Chili Paste', 'Herbs and Spice']}, 
+    {name: 'Spinach Artichoke Dip', ingredients: ['Spinach', 'Artichoke Hearts', 'Cream Cheese', 'Parmesan Cheese', 'Sour Cream', 'Mayonnaise', 'Minced Garlic', 'Red Pepper Flakes']},
+    {name: 'Lemon Pound Cake', ingredients: ['Flour', 'Butter', 'Eggs', 'Sugar', 'Lemon Juice', 'Lemon Zest', 'Baking Powder', 'Vanilla Extract', 'Salt']}
 ]
 
 var checkRecipes = n => {
@@ -14,7 +14,7 @@ var checkRecipes = n => {
 }
 
 var setRecipeList = () => {
-    localStorage.setItem("_imooreva_recipes", JSON.stringify(recipes));
+    localStorage.setItem('_imooreva_recipes', JSON.stringify(recipes));
 }
 
 var updateRecipe = (n, ingredients) => {
